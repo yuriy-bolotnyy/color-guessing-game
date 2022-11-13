@@ -21,13 +21,29 @@ function App(props) {
   const [hexColor, setHexColor] = useState(randomHexColor())
 
   // Generate random color codes for guess buttons
-  const randomColors = randomColorsArray(props.numberOfGuesses)
+  let randomColors = randomColorsArray(props.numberOfGuesses)
 
-  const guess = hexColor
+  let guess = hexColor
   // Insert guess match color into array of color codes for buttons
-  const randomColorCodes = randomColorsArrayWithOneGuess(randomColors, guess)
+  let randomColorCodes = randomColorsArrayWithOneGuess(randomColors, guess)
 
   const [buttonsColorCodes, setButtonColorCodes] = useState(randomColorCodes)
+
+  const [status, setStatus] = useState("")
+
+  const shuffleColors = () => {
+    console.log("Shuffle colors ...")
+    setHexColor(randomHexColor())
+  }
+
+  useEffect(() => {
+    // Generate random color codes for guess buttons
+    let randomColors = randomColorsArray(props.numberOfGuesses)
+    let guess = hexColor
+    // Insert guess match color into array of color codes for buttons
+    let randomColorCodes = randomColorsArrayWithOneGuess(randomColors, guess)
+    setButtonColorCodes(randomColorCodes)
+  }, [hexColor])
 
   console.log("Guess color: ", hexColor)
   // console.log("Buttons: ", buttonsColorCodes)
@@ -36,19 +52,34 @@ function App(props) {
     console.log("color guess: ", colorGuess)
     if (colorGuess === hexColor) {
       console.log("You Won! :)")
+      setStatus("Correct!")
     } else {
-      console.log("Try more ...")
+      setStatus("Incorrect!")
     }
+
+    setTimeout(() => {
+      // console.log("Shuffling colors ...")
+      setStatus("")
+      shuffleColors()
+    }, 3000)
   }
 
   return (
     <div className="App">
+
+      <div className='status'>
+        <h1>{status}</h1>
+      </div>
+
       <div className='colorBox' style={{backgroundColor: hexColor}}>
       </div>
 
       <div className="card">
-        {buttonsColorCodes.map(el => <Button colorcode = {el} key = {el} handleClick = {checkColorGuess} />)}
+        {buttonsColorCodes.map(
+          el => <Button colorcode = {el} key = {el} handleClick = {checkColorGuess} />)}
       </div>
+
+      
 
     </div>
   )
