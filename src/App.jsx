@@ -7,13 +7,11 @@ const randomHexColor = () => "#" + Math.floor(Math.random()*16777215).toString(1
 
 const randomColorsArray = (len) => {
   const randomColors = Array.from({length: len}, () => randomHexColor())
-  // console.log("random array: ", randomColors)
   return randomColors
 }
 
 const randomColorsArrayWithOneGuess = (arr, guess) => {
-  const randomIndex = Math.ceil(Math.random() * arr.length)
-  // arr.splice(randomIndex, 0, guess)
+  const randomIndex = Math.floor(Math.random() * arr.length)
   arr[randomIndex] = guess
   return arr
 }
@@ -29,17 +27,10 @@ function App(props) {
   // Insert guess match color into array of color codes for buttons
   const randomColorCodes = randomColorsArrayWithOneGuess(randomColors, guess)
 
-  const [buttonColorCodes, setButtonColorCodes] = useState(randomColorCodes)
+  const [buttonsColorCodes, setButtonColorCodes] = useState(randomColorCodes)
 
   console.log("Guess color: ", hexColor)
-  console.log("Buttons: ", buttonColorCodes)
-  
-  // setHexColor(randomHexColor())
-
-  const changeColor = () => {
-    console.log("Change color")
-    setHexColor(randomHexColor)
-  }
+  // console.log("Buttons: ", buttonsColorCodes)
 
   const checkColorGuess = (colorGuess) => {
     console.log("color guess: ", colorGuess)
@@ -56,12 +47,7 @@ function App(props) {
       </div>
 
       <div className="card">
-        <Button colorcode = {hexColor} handleClick = {checkColorGuess}/>
-
-        <Button colorcode = "#C90F57"/>
-
-        <Button colorcode = "#C90F57"/>
-
+        {buttonsColorCodes.map(el => <Button colorcode = {el} key = {el} handleClick = {checkColorGuess} />)}
       </div>
 
     </div>
