@@ -61,14 +61,14 @@ function App(props) {
       // console.log("Shuffling colors ...")
       setStatus("")
       shuffleColors()
-    }, 3000)
+    }, 2500)
   }
 
   return (
     <div className="App">
 
       <div className='status'>
-        <h1>{status}</h1>
+        <h1 style={{color: status === "Correct!" ? "green" : "red"}}>{status}</h1>
       </div>
 
       <div className='colorBox' style={{backgroundColor: hexColor}}>

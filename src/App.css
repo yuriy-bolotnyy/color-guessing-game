@@ -54,7 +54,9 @@ body {
   position: absolute;
   top: 5rem;
   width: 100%;
+  font-family: impact, sans-serif;
   font-size: 1.25em;
+  /* color: red; */
   z-index: 1;
   text-shadow:
         2px 2px 0 #ffffff,
