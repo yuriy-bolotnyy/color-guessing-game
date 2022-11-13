@@ -13,39 +13,23 @@ const randomColorsArray = (len) => {
 
 const randomColorsArrayWithOneGuess = (arr, guess) => {
   const randomIndex = Math.ceil(Math.random() * arr.length)
-  arr.splice(randomIndex, 0, guess)
+  // arr.splice(randomIndex, 0, guess)
+  arr[randomIndex] = guess
   return arr
 }
-
-// const rc = randomColorsArray(3)
-// console.log(rc)
-// console.log(randomColorsArrayWithOneGuess(randomColorsArray(3-1), "hello"))
 
 
 function App(props) {
   const [hexColor, setHexColor] = useState(randomHexColor())
 
+  // Generate random color codes for guess buttons
+  const randomColors = randomColorsArray(props.numberOfGuesses)
+
   const guess = hexColor
-  // Insert hexColor into random array of color codes
-  const buttonsArray = randomColorsArrayWithOneGuess(
-    randomColorsArray(props.numberOfGuesses-1), guess)
+  // Insert guess match color into array of color codes for buttons
+  const randomColorCodes = randomColorsArrayWithOneGuess(randomColors, guess)
 
-  const [buttonColorCodes, setButtonColorCodes] = useState(
-    randomColorsArrayWithOneGuess(
-      randomColorsArray(props.numberOfGuesses-1), 
-      hexColor
-    )
-  )
-
-  // useEffect(() => {
-  //   setHexColor(randomHexColor())
-  //   // console.log("Guess color: ", hexColor)
-
-  //   setButtonColorCodes()
-  //   console.log("Number guesses: ", props.numberOfGuesses)
-  //   console.log("Buttons: ", buttonColorCodes)
-
-  // }, []);
+  const [buttonColorCodes, setButtonColorCodes] = useState(randomColorCodes)
 
   console.log("Guess color: ", hexColor)
   console.log("Buttons: ", buttonColorCodes)
